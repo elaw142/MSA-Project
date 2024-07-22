@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+// import "../styles/Navigation.css";
 
 const Navigation: React.FC = () => {
   return (
@@ -7,6 +8,9 @@ const Navigation: React.FC = () => {
       <ul>
         <li>
           <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/recipes">All Recipes</Link> {/* Add the link */}
         </li>
         <li>
           <Link to="/add-recipe">Add Recipe</Link>

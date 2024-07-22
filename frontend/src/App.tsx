@@ -7,6 +7,7 @@ import EditRecipePage from "./pages/EditRecipePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import AllRecipesPage from "./pages/AllRecipesPage";
 import Navigation from "./components/Navigation";
 
 const App: React.FC = () => {
@@ -15,6 +16,7 @@ const App: React.FC = () => {
       <Navigation />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/recipes" element={<AllRecipesPage />} />
         <Route path="/recipes/:id" element={<RecipePage />} />
         <Route path="/add-recipe" element={<AddRecipePage />} />
         <Route path="/edit-recipe/:id" element={<EditRecipePage />} />
