@@ -1,0 +1,43 @@
+@backend_HostAddress = http://localhost:5278
+
+# Get All Recipes
+GET {{backend_HostAddress}}/api/recipes
+Accept: application/json
+
+###
+
+# Get a Recipe by ID
+GET {{backend_HostAddress}}/api/recipes/1
+Accept: application/json
+
+###
+
+# Create a New Recipe
+POST {{backend_HostAddress}}/api/recipes
+Content-Type: application/json
+
+{
+  "title": "Spaghetti Bolognese",
+  "description": "A classic Italian pasta dish",
+  "ingredients": "Spaghetti, ground beef, tomato sauce, onions, garlic, olive oil, salt, pepper",
+  "instructions": "1. Cook spaghetti according to package instructions. 2. In a pan, heat olive oil and sauté onions and garlic. 3. Add ground beef and cook until browned. 4. Add tomato sauce and simmer for 15 minutes. 5. Serve sauce over spaghetti."
+}
+
+###
+
+# Update an Existing Recipe
+PUT {{backend_HostAddress}}/api/recipes/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Spaghetti Bolognese",
+  "description": "A classic Italian pasta dish with a rich tomato sauce",
+  "ingredients": "Spaghetti, ground beef, tomato sauce, onions, garlic, olive oil, salt, pepper, basil",
+  "instructions": "1. Cook spaghetti according to package instructions. 2. In a pan, heat olive oil and sauté onions and garlic. 3. Add ground beef and cook until browned. 4. Add tomato sauce and simmer for 15 minutes. 5. Serve sauce over spaghetti."
+}
+
+###
+
+# Delete a Recipe
+DELETE {{backend_HostAddress}}/api/recipes/1
