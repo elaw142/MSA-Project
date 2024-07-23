@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import AllRecipesPage from "./pages/AllRecipesPage";
+import SearchResultsPage from "./pages/SearchResultsPage"; // Import the new page
 import Navigation from "./components/Navigation";
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Route path="/edit-recipe/:id" element={<EditRecipePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/search" element={<SearchResultsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

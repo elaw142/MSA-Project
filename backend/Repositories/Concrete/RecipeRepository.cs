@@ -3,6 +3,7 @@ using backend.Data;
 using backend.Models;
 using backend.Repositories.Abstract;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace backend.Repositories.Concrete
@@ -46,6 +47,18 @@ namespace backend.Repositories.Concrete
                 _context.Recipes.Remove(recipe);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<Recipe>> SearchRecipesAsync(string query)
+        {
+            return await _context.Recipes
+                .Where(
+                    r =>
+                        r.Title.Contains(query)
+                        || r.Description.Contains(query)
+                        || r.Ingredients.Contains(query)
+                )
+                .ToListAsync();
         }
     }
 }

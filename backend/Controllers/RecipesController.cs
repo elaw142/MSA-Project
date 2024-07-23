@@ -18,9 +18,15 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes([FromQuery] string? query)
         {
-            return Ok(await _recipeRepository.GetAllRecipesAsync());
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return Ok(await _recipeRepository.GetAllRecipesAsync());
+            }
+
+            var recipes = await _recipeRepository.SearchRecipesAsync(query);
+            return Ok(recipes);
         }
 
         [HttpGet("{id}")]

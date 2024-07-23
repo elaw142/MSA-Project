@@ -11,5 +11,6 @@ namespace backend.Repositories.Abstract
         Task AddRecipeAsync(Recipe recipe);
         Task UpdateRecipeAsync(Recipe recipe);
         Task DeleteRecipeAsync(int id);
+        Task<IEnumerable<Recipe>> SearchRecipesAsync(string query); // Added search method
     }
 }
