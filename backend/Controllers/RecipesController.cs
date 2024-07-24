@@ -11,10 +11,15 @@ namespace backend.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly IRecipeRepository _recipeRepository;
+        private readonly IReviewRepository _reviewRepository;
 
-        public RecipesController(IRecipeRepository recipeRepository)
+        public RecipesController(
+            IRecipeRepository recipeRepository,
+            IReviewRepository reviewRepository
+        )
         {
             _recipeRepository = recipeRepository;
+            _reviewRepository = reviewRepository;
         }
 
         [HttpGet]
@@ -64,6 +69,21 @@ namespace backend.Controllers
         {
             await _recipeRepository.DeleteRecipeAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("{recipeId}/reviews")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviews(int recipeId)
+        {
+            var reviews = await _reviewRepository.GetReviewsByRecipeIdAsync(recipeId);
+            return Ok(reviews);
+        }
+
+        [HttpPost("{recipeId}/reviews")]
+        public async Task<ActionResult<Review>> PostReview(int recipeId, Review review)
+        {
+            review.RecipeId = recipeId;
+            await _reviewRepository.AddReviewAsync(review);
+            return CreatedAtAction(nameof(GetReviews), new { recipeId = recipeId }, review);
         }
     }
 }

@@ -19,12 +19,14 @@ namespace backend.Repositories.Concrete
 
         public async Task<IEnumerable<Recipe>> GetAllRecipesAsync()
         {
-            return await _context.Recipes.ToListAsync();
+            return await _context.Recipes.Include(r => r.Reviews).ToListAsync();
         }
 
         public async Task<Recipe> GetRecipeByIdAsync(int id)
         {
-            return await _context.Recipes.FindAsync(id);
+            return await _context.Recipes
+                .Include(r => r.Reviews)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task AddRecipeAsync(Recipe recipe)
@@ -52,6 +54,7 @@ namespace backend.Repositories.Concrete
         public async Task<IEnumerable<Recipe>> SearchRecipesAsync(string query)
         {
             return await _context.Recipes
+                .Include(r => r.Reviews)
                 .Where(
                     r =>
                         r.Title.Contains(query)
