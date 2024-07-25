@@ -7,13 +7,15 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setToken } = useAuth();
+  const { setToken, setUserId } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await api.post("/auth/login", { username, password });
+      console.log("Login Response:", response.data); // Debugging line
       setToken(response.data.token);
+      setUserId(response.data.userId); // Ensure userId is set
       navigate("/");
     } catch (error) {
       console.error("Error logging in:", error);

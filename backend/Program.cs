@@ -22,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>(); // Register the ReviewRepository
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
 // Add JWT Authentication
 var key = Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]);

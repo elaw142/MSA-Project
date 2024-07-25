@@ -16,22 +16,44 @@ namespace backend.Controllers
     {
         private readonly IAuthRepository _authRepository;
         private readonly IConfiguration _configuration;
+        private readonly IUserProfileRepository _userProfileRepository;
 
-        public AuthController(IAuthRepository authRepository, IConfiguration configuration)
+        public AuthController(
+            IAuthRepository authRepository,
+            IConfiguration configuration,
+            IUserProfileRepository userProfileRepository
+        )
         {
             _authRepository = authRepository;
             _configuration = configuration;
+            _userProfileRepository = userProfileRepository;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDto userRegisterDto)
         {
+            userRegisterDto.Username = userRegisterDto.Username.ToLower();
+
             if (await _authRepository.UserExists(userRegisterDto.Username))
-                return BadRequest("Username already exists");
+                return BadRequest("Username is already taken");
 
-            var user = new User { Username = userRegisterDto.Username };
+            var userToCreate = new User { Username = userRegisterDto.Username };
 
-            var createdUser = await _authRepository.Register(user, userRegisterDto.Password);
+            var createdUser = await _authRepository.Register(
+                userToCreate,
+                userRegisterDto.Password
+            );
+
+            // Create user profile
+            var userProfile = new UserProfile
+            {
+                UserId = createdUser.Id,
+                FullName = "", // Default values, can be updated later
+                Bio = "",
+                ProfilePictureUrl = ""
+            };
+
+            await _userProfileRepository.AddUserProfileAsync(userProfile);
 
             return StatusCode(201);
         }
@@ -65,7 +87,13 @@ namespace backend.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new { token = tokenHandler.WriteToken(token) });
+            return Ok(
+                new
+                {
+                    token = tokenHandler.WriteToken(token),
+                    userId = user.Id // Ensure userId is returned
+                }
+            );
         }
     }
 }

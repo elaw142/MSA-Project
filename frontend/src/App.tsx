@@ -14,6 +14,8 @@ import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import AllRecipesPage from "./pages/AllRecipesPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import EditProfilePage from "./pages/EditProfilePage";
 import Navigation from "./components/Navigation";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
@@ -45,6 +47,22 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
+          <Route
+            path="/userprofile/:userId"
+            element={
+              <PrivateRoute>
+                <UserProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/editprofile/:userId"
+            element={
+              <PrivateRoute>
+                <EditProfilePage />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
