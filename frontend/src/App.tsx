@@ -18,12 +18,14 @@ import UserProfilePage from "./pages/UserProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import Navigation from "./components/Navigation";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import SearchBar from "./components/SearchBar";
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
         <Navigation />
+        <SearchBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/recipes" element={<AllRecipesPage />} />

@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Search: React.FC = () => {
+const SearchBar: React.FC = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     navigate(`/search?query=${query}`);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSearch}>
       <input
         type="text"
-        placeholder="Search for recipes..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search recipes..."
       />
       <button type="submit">Search</button>
     </form>
   );
 };
 
-export default Search;
+export default SearchBar;
