@@ -5,11 +5,11 @@
 
 ## Backend
 
-cd backend
+cd backend\
 dotnet run
 
 ## Frontend
 
-cd frontend
-npm install
+cd frontend\
+npm install\
 npm run start
