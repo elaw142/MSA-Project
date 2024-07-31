@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 interface Recipe {
   id: number;
@@ -8,6 +9,7 @@ interface Recipe {
   description: string;
   ingredients: string;
   instructions: string;
+  userID: number;
   reviews: Review[];
 }
 
@@ -19,6 +21,7 @@ interface Review {
 }
 
 const RecipePage: React.FC = () => {
+  const { token, userId } = useAuth();
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
@@ -87,7 +90,9 @@ const RecipePage: React.FC = () => {
       <p>{recipe.ingredients}</p>
       <h3>Instructions</h3>
       <p>{recipe.instructions}</p>
-      <button onClick={handleDelete}>Delete Recipe</button>
+      {Number(userId) === Number(recipe.userID) && ( // Ensure both are numbers
+        <button onClick={handleDelete}>Delete Recipe</button>
+      )}
       <h3>Reviews</h3>
       <ul>
         {recipe.reviews.map((review) => (
@@ -97,41 +102,45 @@ const RecipePage: React.FC = () => {
           </li>
         ))}
       </ul>
-      <h3>Add a Review</h3>
-      <form onSubmit={handleSubmitReview}>
+      {userId !== recipe.userID && (
         <div>
-          <label>Name</label>
-          <input
-            type="text"
-            value={reviewerName}
-            onChange={(e) => setReviewerName(e.target.value)}
-            required
-          />
+          <h3>Add a Review</h3>
+          <form onSubmit={handleSubmitReview}>
+            <div>
+              <label>Name</label>
+              <input
+                type="text"
+                value={reviewerName}
+                onChange={(e) => setReviewerName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>Rating</label>
+              <select
+                value={reviewRating}
+                onChange={(e) => setReviewRating(parseInt(e.target.value))}
+                required
+              >
+                {[1, 2, 3, 4, 5].map((rating) => (
+                  <option key={rating} value={rating}>
+                    {rating}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>Review</label>
+              <textarea
+                value={reviewContent}
+                onChange={(e) => setReviewContent(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">Submit Review</button>
+          </form>
         </div>
-        <div>
-          <label>Rating</label>
-          <select
-            value={reviewRating}
-            onChange={(e) => setReviewRating(parseInt(e.target.value))}
-            required
-          >
-            {[1, 2, 3, 4, 5].map((rating) => (
-              <option key={rating} value={rating}>
-                {rating}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Review</label>
-          <textarea
-            value={reviewContent}
-            onChange={(e) => setReviewContent(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Submit Review</button>
-      </form>
+      )}
     </div>
   );
 };

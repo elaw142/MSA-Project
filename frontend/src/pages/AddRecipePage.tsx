@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 const AddRecipePage: React.FC = () => {
+  const { userId } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState("");
@@ -17,6 +19,7 @@ const AddRecipePage: React.FC = () => {
         description,
         ingredients,
         instructions,
+        userID: String(userId),
       });
       navigate("/recipes");
     } catch (error) {
