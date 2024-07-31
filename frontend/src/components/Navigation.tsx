@@ -20,6 +20,9 @@ const Navigation: React.FC = () => {
         {token && userId && (
           <>
             <li>
+              <Link to="/add-recipe">Add Recipe</Link>
+            </li>
+            <li>
               <Link to={`/userprofile/${userId}`}>My Profile</Link>
             </li>
             <li>

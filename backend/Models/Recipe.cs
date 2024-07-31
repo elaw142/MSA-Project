@@ -9,6 +9,7 @@ namespace backend.Models
         public string Description { get; set; }
         public string Ingredients { get; set; }
         public string Instructions { get; set; }
+        public string UserID { get; set; }
         public List<Review> Reviews { get; set; } = new List<Review>(); // List of reviews
     }
 }
