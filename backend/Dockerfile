@@ -17,6 +17,7 @@ RUN dotnet build -c Release -o /app/build
 # Publish the application
 RUN dotnet publish -c Release -o /app/publish
 
+
 # Use the official .NET runtime image as a runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
@@ -25,6 +26,9 @@ WORKDIR /app
 
 # Copy the published application from the build stage
 COPY --from=build /app/publish ./
+
+# Copy the SQLite database file
+COPY RecipeSharingDb.db ./
 
 # Expose the port the application runs on
 EXPOSE 80
