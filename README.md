@@ -1,6 +1,7 @@
 # TEMP READ ME :)
 
 # How to build image for azure
+make sure docker is open and logged in
 
 ## Backend
 
