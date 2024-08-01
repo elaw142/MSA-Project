@@ -1,10 +1,25 @@
 import React from "react";
+import { Container, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   return (
-    <div>
-      <h1>Welcome to the Recipe Sharing Platform</h1>
-    </div>
+    <Container>
+      <Typography variant="h1" gutterBottom>
+        Welcome to the Recipe Sharing App
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Discover and share the best recipes from around the world.
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        component={Link}
+        to="/recipes"
+      >
+        Browse Recipes
+      </Button>
+    </Container>
   );
 };
 

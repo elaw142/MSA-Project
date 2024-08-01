@@ -1,47 +1,56 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Button, Typography } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 
 const Navigation: React.FC = () => {
   const { token, userId } = useAuth();
 
-  console.log("Navigation - Token:", token); // Debugging line
-  console.log("Navigation - User ID:", userId); // Debugging line
-
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/recipes">Recipes</Link>
-        </li>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Recipe App
+        </Typography>
+        <Button color="inherit" component={Link} to="/">
+          Home
+        </Button>
+        <Button color="inherit" component={Link} to="/recipes">
+          Recipes
+        </Button>
         {token && userId && (
           <>
-            <li>
-              <Link to="/add-recipe">Add Recipe</Link>
-            </li>
-            <li>
-              <Link to={`/userprofile/${userId}`}>My Profile</Link>
-            </li>
-            <li>
-              <Link to={`/editprofile/${userId}`}>Edit Profile</Link>
-            </li>
+            <Button
+              color="inherit"
+              component={Link}
+              to={`/userprofile/${userId}`}
+            >
+              My Profile
+            </Button>
+            <Button
+              color="inherit"
+              component={Link}
+              to={`/editprofile/${userId}`}
+            >
+              Edit Profile
+            </Button>
+            <Button color="inherit" component={Link} to="/add-recipe">
+              Add Recipe
+            </Button>
           </>
         )}
         {!token && (
           <>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
+            <Button color="inherit" component={Link} to="/register">
+              Register
+            </Button>
           </>
         )}
-      </ul>
-    </nav>
+      </Toolbar>
+    </AppBar>
   );
 };
 

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from "react-router-dom";
+import { ThemeProvider, CssBaseline, Button } from "@mui/material";
+import { lightTheme, darkTheme } from "./theme";
 import HomePage from "./pages/HomePage";
 import RecipePage from "./pages/RecipePage";
 import AddRecipePage from "./pages/AddRecipePage";
@@ -21,53 +23,65 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import SearchBar from "./components/SearchBar";
 
 const App: React.FC = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
     <AuthProvider>
-      <Router>
-        <Navigation />
-        <SearchBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/recipes" element={<AllRecipesPage />} />
-          <Route path="/recipes/:id" element={<RecipePage />} />
-          <Route
-            path="/add-recipe"
-            element={
-              <PrivateRoute>
-                <AddRecipePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/edit-recipe/:id"
-            element={
-              <PrivateRoute>
-                <EditRecipePage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/search" element={<SearchResultsPage />} />
-          <Route
-            path="/userprofile/:userId"
-            element={
-              <PrivateRoute>
-                <UserProfilePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/editprofile/:userId"
-            element={
-              <PrivateRoute>
-                <EditProfilePage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Router>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <CssBaseline />
+        <Router>
+          <Navigation />
+          <Button onClick={toggleTheme} variant="contained" sx={{ margin: 2 }}>
+            {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          </Button>
+          <SearchBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/recipes" element={<AllRecipesPage />} />
+            <Route path="/recipes/:id" element={<RecipePage />} />
+            <Route
+              path="/add-recipe"
+              element={
+                <PrivateRoute>
+                  <AddRecipePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/edit-recipe/:id"
+              element={
+                <PrivateRoute>
+                  <EditRecipePage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/search" element={<SearchResultsPage />} />
+            <Route
+              path="/userprofile/:userId"
+              element={
+                <PrivateRoute>
+                  <UserProfilePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/editprofile/:userId"
+              element={
+                <PrivateRoute>
+                  <EditProfilePage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
     </AuthProvider>
   );
 };
