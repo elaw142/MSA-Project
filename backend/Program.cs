@@ -44,7 +44,12 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+        policy
+            .WithOrigins(
+                "https://msabackendwebapp-b7b6bqfda6fbhafk.australiasoutheast-01.azurewebsites.net/"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
