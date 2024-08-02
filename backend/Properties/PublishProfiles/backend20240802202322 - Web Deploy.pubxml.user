@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAFSLPoOHz50ebD77otgABPQAAAAACAAAAAAAQZgAAAAEAACAAAADcQ2CXb641sZn3Yr9sCjjGodz1BqQVOiLIMwOZbpr8iAAAAAAOgAAAAAIAACAAAABRxIzVl7slvQT5gP5iTyODyi8QgAAFPmQ62j1+qcFZ/YAAAADQ2Tt1L6jfSOmnjGo2OLNgi7MIuVA/aiUjmVZR5JkIlKBrBfcI/sZ7konIVvTIVpXwgngo2OSWV8xNmBAcaY9wOseYXBSOwbfnVyB67iI6vU/2sqEW8aO7BaogwjvhVwZlu/Q66zX27oIdHizDoVoaxqnRF55t35i23XLh4lNK9UAAAACeJPzulApoIsLY5JFAR4cCF+9l5DGAxGfyUorJcbE5iPQ7Vagf8gOnIYbETnqORJnyqWsynpS+TKAYxC42VGme</EncryptedPassword>
+    <History>False|2024-08-02T08:27:41.9213234Z;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=RecipeSharingDb.db</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="backend.Data.AppDbContext">
+      <Value>Data Source=RecipeSharingDb.db</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

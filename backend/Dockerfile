@@ -31,6 +31,7 @@ COPY --from=build /app/publish ./
 COPY RecipeSharingDb.db ./
 
 # Expose the port the application runs on
+EXPOSE 8080
 EXPOSE 80
 
 # Set the entry point for the application
