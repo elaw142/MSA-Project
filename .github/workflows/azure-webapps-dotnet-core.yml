@@ -67,7 +67,7 @@ jobs:
         run: export ASPNETCORE_URLS=http://+:80
 
       - name: copy database
-        run: cp RecipeSharingDb.db ./publish/RecipeSharingDb.db
+        run: cp backend/RecipeSharingDb.db ./backend/publish/RecipeSharingDb.db
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
