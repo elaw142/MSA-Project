@@ -5,9 +5,10 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5278:8080"
+      - "5278:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
     networks:
       - app-network
 
