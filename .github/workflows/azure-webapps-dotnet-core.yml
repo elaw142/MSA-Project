@@ -52,6 +52,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Debug
+        run: 'ls -la'
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
