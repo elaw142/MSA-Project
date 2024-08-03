@@ -1,4 +1,3 @@
-// src/pages/AllRecipesPage.tsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -11,6 +10,7 @@ import {
   Button,
 } from "@mui/material";
 import api from "../services/api";
+import SearchBar from "../components/SearchBar"; // Ensure this import is present
 
 interface Recipe {
   id: number;
@@ -46,6 +46,7 @@ const AllRecipesPage: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         All Recipes
       </Typography>
+      <SearchBar /> {/* Ensure this line is present to include the SearchBar */}
       <Grid container spacing={4}>
         {recipes.map((recipe) => (
           <Grid item key={recipe.id} xs={12} sm={6} md={4}>

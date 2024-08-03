@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import api from "../services/api";
 import { Link } from "react-router-dom";
+import {
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardActionArea,
+  CircularProgress,
+} from "@mui/material";
 
 interface Recipe {
   id: number;
@@ -34,21 +43,50 @@ const SearchResultsPage: React.FC = () => {
   }, [query]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
   }
 
   return (
-    <div>
-      <h1>Search Results</h1>
-      <ul>
-        {recipes.map((recipe) => (
-          <li key={recipe.id}>
-            <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-            <p>{recipe.description}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container sx={{ paddingTop: 8 }}>
+      <Typography variant="h4" gutterBottom>
+        Search Results for "{query}"
+      </Typography>
+      {recipes.length === 0 ? (
+        <Typography variant="h6" color="textSecondary">
+          No recipes found.
+        </Typography>
+      ) : (
+        <Grid container spacing={4}>
+          {recipes.map((recipe) => (
+            <Grid item key={recipe.id} xs={12} sm={6} md={4}>
+              <Card>
+                <CardActionArea component={Link} to={`/recipes/${recipe.id}`}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {recipe.title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {recipe.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Container>
   );
 };
 

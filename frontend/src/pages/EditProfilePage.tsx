@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Box,
+  Grid,
+} from "@mui/material";
 
 interface UserProfile {
   id: number;
@@ -46,7 +55,6 @@ const EditProfilePage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log("Sending user profile data:", userProfile);
       await api.put(`/userprofile/${userId}`, userProfile);
       navigate(`/userprofile/${userId}`);
     } catch (error) {
@@ -60,40 +68,58 @@ const EditProfilePage: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>Edit Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            value={userProfile.fullName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Bio</label>
-          <textarea
-            name="bio"
-            value={userProfile.bio}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Profile Picture URL</label>
-          <input
-            type="text"
-            name="profilePictureUrl"
-            value={userProfile.profilePictureUrl}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
+    <Container component="main" maxWidth="sm">
+      <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          Edit Profile
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                label="Full Name"
+                name="fullName"
+                value={userProfile.fullName}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                label="Bio"
+                name="bio"
+                value={userProfile.bio}
+                onChange={handleChange}
+                required
+                multiline
+                rows={4}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                label="Profile Picture URL"
+                name="profilePictureUrl"
+                value={userProfile.profilePictureUrl}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+          <Box
+            sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}
+          >
+            <Button type="submit" variant="contained" color="primary">
+              Save Changes
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

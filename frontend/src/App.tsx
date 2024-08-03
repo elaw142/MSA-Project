@@ -5,7 +5,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { ThemeProvider, CssBaseline, Button } from "@mui/material";
+import { ThemeProvider, CssBaseline } from "@mui/material";
 import { lightTheme, darkTheme } from "./theme";
 import HomePage from "./pages/HomePage";
 import RecipePage from "./pages/RecipePage";
@@ -20,7 +20,6 @@ import UserProfilePage from "./pages/UserProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import Navigation from "./components/Navigation";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import SearchBar from "./components/SearchBar";
 
 const App: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -34,11 +33,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <CssBaseline />
         <Router>
-          <Navigation />
-          <Button onClick={toggleTheme} variant="contained" sx={{ margin: 2 }}>
-            {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          </Button>
-          <SearchBar />
+          <Navigation toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/recipes" element={<AllRecipesPage />} />

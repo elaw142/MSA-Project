@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import api from "../services/api";
+import {
+  Container,
+  Typography,
+  Box,
+  Paper,
+  Button,
+  Avatar,
+} from "@mui/material";
 
 interface UserProfile {
   id: number;
@@ -38,11 +46,32 @@ const UserProfilePage: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>{userProfile.fullName}</h1>
-      <img src={userProfile.profilePictureUrl} alt={userProfile.fullName} />
-      <p>{userProfile.bio}</p>
-    </div>
+    <Container component="main" maxWidth="md">
+      <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }}>
+        <Box display="flex" alignItems="center" flexDirection="column">
+          <Avatar
+            alt={userProfile.fullName}
+            src={userProfile.profilePictureUrl}
+            sx={{ width: 100, height: 100, marginBottom: 2 }}
+          />
+          <Typography variant="h4" gutterBottom>
+            {userProfile.fullName}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {userProfile.bio}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            component={RouterLink}
+            to={`/editprofile/${userId}`}
+            sx={{ marginTop: 2 }}
+          >
+            Edit Profile
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 
