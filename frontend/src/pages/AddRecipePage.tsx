@@ -18,6 +18,7 @@ const AddRecipePage: React.FC = () => {
   const [description, setDescription] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [imageUrl, setImageUrl] = useState(""); // New state for image URL
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,6 +30,7 @@ const AddRecipePage: React.FC = () => {
         ingredients,
         instructions,
         userID: String(userId),
+        imageUrl, // Include image URL in the request
       });
       navigate("/recipes");
     } catch (error) {
@@ -86,6 +88,16 @@ const AddRecipePage: React.FC = () => {
                 required
                 multiline
                 rows={4}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                label="Image URL"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                required
               />
             </Grid>
           </Grid>

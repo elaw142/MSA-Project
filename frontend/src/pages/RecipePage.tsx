@@ -4,14 +4,15 @@ import {
   Container,
   Typography,
   Button,
-  TextField,
   Box,
-  MenuItem,
   List,
   ListItem,
   ListItemText,
   CircularProgress,
   Rating,
+  CardMedia,
+  TextField,
+  MenuItem,
 } from "@mui/material";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
@@ -23,6 +24,7 @@ interface Recipe {
   ingredients: string;
   instructions: string;
   userID: number;
+  imageUrl: string | null; // Allow imageUrl to be nullable
   reviews: Review[];
 }
 
@@ -34,7 +36,7 @@ interface Review {
 }
 
 const RecipePage: React.FC = () => {
-  const { token, userId } = useAuth();
+  const { userId } = useAuth();
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
@@ -122,6 +124,14 @@ const RecipePage: React.FC = () => {
       >
         Back
       </Button>
+      {recipe.imageUrl && (
+        <CardMedia
+          component="img"
+          height="200"
+          image={recipe.imageUrl}
+          alt={recipe.title}
+        />
+      )}
       <Typography variant="h3" gutterBottom>
         {recipe.title}
       </Typography>
@@ -140,16 +150,6 @@ const RecipePage: React.FC = () => {
       <Typography variant="body1" paragraph>
         {recipe.instructions}
       </Typography>
-      {/* {Number(userId) === Number(recipe.userID) && (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleDelete}
-          sx={{ mb: 4 }}
-        >
-          Delete Recipe
-        </Button>
-      )} */}
       <Typography variant="h5" gutterBottom>
         Reviews
       </Typography>

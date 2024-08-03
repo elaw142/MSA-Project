@@ -10,6 +10,7 @@ namespace backend.Models
         public string Ingredients { get; set; }
         public string Instructions { get; set; }
         public string UserID { get; set; }
+        public string? ImageUrl { get; set; } // New property for image URL
         public List<Review> Reviews { get; set; } = new List<Review>(); // List of reviews
     }
 }
