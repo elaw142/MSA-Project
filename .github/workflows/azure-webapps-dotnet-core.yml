@@ -63,6 +63,12 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp backend
 
+      - name: expose port
+        run: export ASPNETCORE_URLS=http://+:80
+
+      - name: copy database
+        run: cp backend/RecipeSharingDb.db ./backend/publish/RecipeSharingDb.db
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
@@ -92,4 +98,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ github.workspace }}/myapp
+          package: ${{ github.workspace }}
