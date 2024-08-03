@@ -11,14 +11,14 @@ import HomePage from "./pages/HomePage";
 import RecipePage from "./pages/RecipePage";
 import AddRecipePage from "./pages/AddRecipePage";
 import EditRecipePage from "./pages/EditRecipePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import AllRecipesPage from "./pages/AllRecipesPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import Navigation from "./components/Navigation";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const App: React.FC = () => {
@@ -54,8 +54,6 @@ const App: React.FC = () => {
                 </PrivateRoute>
               }
             />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
             <Route path="/search" element={<SearchResultsPage />} />
             <Route
               path="/userprofile/:userId"
@@ -73,6 +71,8 @@ const App: React.FC = () => {
                 </PrivateRoute>
               }
             />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Router>

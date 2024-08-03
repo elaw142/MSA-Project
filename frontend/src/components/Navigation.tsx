@@ -31,25 +31,16 @@ const Navigation: React.FC<{
     setDrawerOpen(!drawerOpen);
   };
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (paths: string[]) => paths.includes(location.pathname);
 
   const drawer = (
     <List>
       <ListItem
         button
         component={Link}
-        to="/"
-        onClick={handleDrawerToggle}
-        selected={isActive("/")}
-      >
-        <ListItemText primary="Home" />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
         to="/recipes"
         onClick={handleDrawerToggle}
-        selected={isActive("/recipes")}
+        selected={isActive(["/recipes"])}
       >
         <ListItemText primary="Recipes" />
       </ListItem>
@@ -60,7 +51,7 @@ const Navigation: React.FC<{
             component={Link}
             to={`/userprofile/${userId}`}
             onClick={handleDrawerToggle}
-            selected={isActive(`/userprofile/${userId}`)}
+            selected={isActive([`/userprofile/${userId}`])}
           >
             <ListItemText primary="My Profile" />
           </ListItem>
@@ -69,7 +60,7 @@ const Navigation: React.FC<{
             component={Link}
             to="/add-recipe"
             onClick={handleDrawerToggle}
-            selected={isActive("/add-recipe")}
+            selected={isActive(["/add-recipe"])}
           >
             <ListItemText primary="Add Recipe" />
           </ListItem>
@@ -91,18 +82,9 @@ const Navigation: React.FC<{
             component={Link}
             to="/login"
             onClick={handleDrawerToggle}
-            selected={isActive("/login")}
+            selected={isActive(["/login", "/register"])}
           >
-            <ListItemText primary="Login" />
-          </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/register"
-            onClick={handleDrawerToggle}
-            selected={isActive("/register")}
-          >
-            <ListItemText primary="Register" />
+            <ListItemText primary="Sign In/Up" />
           </ListItem>
         </>
       )}
@@ -148,18 +130,18 @@ const Navigation: React.FC<{
                 color="inherit"
                 component={Link}
                 to="/recipes"
-                sx={{ fontWeight: isActive("/recipes") ? "bold" : "normal" }}
+                sx={{ fontWeight: isActive(["/recipes"]) ? "bold" : "normal" }}
               >
                 Recipes
               </Button>
-              {token && userId && (
+              {token && userId ? (
                 <>
                   <Button
                     color="inherit"
                     component={Link}
                     to={`/userprofile/${userId}`}
                     sx={{
-                      fontWeight: isActive(`/userprofile/${userId}`)
+                      fontWeight: isActive([`/userprofile/${userId}`])
                         ? "bold"
                         : "normal",
                     }}
@@ -171,7 +153,7 @@ const Navigation: React.FC<{
                     component={Link}
                     to="/add-recipe"
                     sx={{
-                      fontWeight: isActive("/add-recipe") ? "bold" : "normal",
+                      fontWeight: isActive(["/add-recipe"]) ? "bold" : "normal",
                     }}
                   >
                     Add Recipe
@@ -180,28 +162,19 @@ const Navigation: React.FC<{
                     Logout
                   </Button>
                 </>
-              )}
-              {!token && (
-                <>
-                  <Button
-                    color="inherit"
-                    component={Link}
-                    to="/login"
-                    sx={{ fontWeight: isActive("/login") ? "bold" : "normal" }}
-                  >
-                    Login
-                  </Button>
-                  <Button
-                    color="inherit"
-                    component={Link}
-                    to="/register"
-                    sx={{
-                      fontWeight: isActive("/register") ? "bold" : "normal",
-                    }}
-                  >
-                    Register
-                  </Button>
-                </>
+              ) : (
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/login"
+                  sx={{
+                    fontWeight: isActive(["/login", "/register"])
+                      ? "bold"
+                      : "normal",
+                  }}
+                >
+                  Sign In/Up
+                </Button>
               )}
               <IconButton
                 edge="end"

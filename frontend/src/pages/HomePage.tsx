@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
           fontSize: { xs: "2rem", sm: "3rem", md: "4rem" },
         }}
       >
-        Welcome to the Recipe Sharing App
+        Welcome to Nosh
       </Typography>
       <Typography
         variant="body1"
@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
           marginBottom: 3,
         }}
       >
-        Discover and share the best recipes from around the world.
+        Discover and share the best recipes from around the world!
       </Typography>
       <Button
         variant="contained"

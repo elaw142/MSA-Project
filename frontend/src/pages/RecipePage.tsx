@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import {
+  Container,
+  Typography,
+  Button,
+  TextField,
+  Box,
+  MenuItem,
+  List,
+  ListItem,
+  ListItemText,
+  CircularProgress,
+  Rating,
+} from "@mui/material";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
@@ -28,6 +41,7 @@ const RecipePage: React.FC = () => {
   const [reviewContent, setReviewContent] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewerName, setReviewerName] = useState("");
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,13 +83,25 @@ const RecipePage: React.FC = () => {
       setReviewerName("");
       const response = await api.get(`/recipes/${id}`);
       setRecipe(response.data);
+      setShowReviewForm(false); // Hide the form after submission
     } catch (error) {
       console.error("Error submitting review:", error);
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Container>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh"
+        >
+          <CircularProgress />
+        </Box>
+      </Container>
+    );
   }
 
   if (!recipe) {
@@ -83,65 +109,132 @@ const RecipePage: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>{recipe.title}</h1>
-      <p>{recipe.description}</p>
-      <h3>Ingredients</h3>
-      <p>{recipe.ingredients}</p>
-      <h3>Instructions</h3>
-      <p>{recipe.instructions}</p>
-      {Number(userId) === Number(recipe.userID) && ( // Ensure both are numbers
-        <button onClick={handleDelete}>Delete Recipe</button>
+    <Container sx={{ position: "relative", pt: 4, pb: 8 }}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate(-1)}
+        sx={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+        }}
+      >
+        Back
+      </Button>
+      <Typography variant="h3" gutterBottom>
+        {recipe.title}
+      </Typography>
+      <Typography variant="body1" paragraph>
+        {recipe.description}
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        Ingredients
+      </Typography>
+      <Typography variant="body1" paragraph>
+        {recipe.ingredients}
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        Instructions
+      </Typography>
+      <Typography variant="body1" paragraph>
+        {recipe.instructions}
+      </Typography>
+      {Number(userId) === Number(recipe.userID) && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleDelete}
+          sx={{ mb: 4 }}
+        >
+          Delete Recipe
+        </Button>
       )}
-      <h3>Reviews</h3>
-      <ul>
+      <Typography variant="h5" gutterBottom>
+        Reviews
+      </Typography>
+      <List>
         {recipe.reviews.map((review) => (
-          <li key={review.id}>
-            <strong>{review.reviewerName}</strong> ({review.rating}/5):{" "}
-            {review.content}
-          </li>
+          <ListItem key={review.id} alignItems="flex-start">
+            <ListItemText
+              primary={
+                <Box display="flex" alignItems="center">
+                  {review.reviewerName}
+                  <Rating
+                    value={review.rating}
+                    readOnly
+                    precision={0.5}
+                    sx={{ ml: 1 }}
+                  />
+                </Box>
+              }
+              secondary={review.content}
+            />
+          </ListItem>
         ))}
-      </ul>
+      </List>
       {userId !== recipe.userID && (
-        <div>
-          <h3>Add a Review</h3>
-          <form onSubmit={handleSubmitReview}>
-            <div>
-              <label>Name</label>
-              <input
-                type="text"
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setShowReviewForm(!showReviewForm)}
+            sx={{ mt: 2 }}
+          >
+            {showReviewForm ? "Cancel Review" : "Add a Review"}
+          </Button>
+          {showReviewForm && (
+            <Box component="form" onSubmit={handleSubmitReview} sx={{ mt: 4 }}>
+              <TextField
+                label="Name"
+                variant="outlined"
+                margin="normal"
+                fullWidth
                 value={reviewerName}
                 onChange={(e) => setReviewerName(e.target.value)}
                 required
               />
-            </div>
-            <div>
-              <label>Rating</label>
-              <select
+              <TextField
+                select
+                label="Rating"
+                variant="outlined"
+                margin="normal"
+                fullWidth
                 value={reviewRating}
                 onChange={(e) => setReviewRating(parseInt(e.target.value))}
                 required
               >
                 {[1, 2, 3, 4, 5].map((rating) => (
-                  <option key={rating} value={rating}>
+                  <MenuItem key={rating} value={rating}>
                     {rating}
-                  </option>
+                  </MenuItem>
                 ))}
-              </select>
-            </div>
-            <div>
-              <label>Review</label>
-              <textarea
+              </TextField>
+              <TextField
+                label="Review"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                multiline
+                rows={4}
                 value={reviewContent}
                 onChange={(e) => setReviewContent(e.target.value)}
                 required
               />
-            </div>
-            <button type="submit">Submit Review</button>
-          </form>
-        </div>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{ mt: 2 }}
+              >
+                Submit Review
+              </Button>
+            </Box>
+          )}
+        </>
       )}
-    </div>
+    </Container>
   );
 };
 
