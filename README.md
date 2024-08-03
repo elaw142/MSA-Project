@@ -1,9 +1,14 @@
 # TEMP READ ME :)
 
+# How to deploy backend for azure
+
+run deploy.ps1\
+through azure extension, deploy webapp to msabackend001
+
 # How to build image for azure
 make sure docker is open and logged in
 
-## Backend
+## Backend (use other method)
 
 cd backend\
 docker build -t msabackendcontainer.azurecr.io/backend:latest -f ./Dockerfile .\
