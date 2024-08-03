@@ -140,7 +140,7 @@ const RecipePage: React.FC = () => {
       <Typography variant="body1" paragraph>
         {recipe.instructions}
       </Typography>
-      {Number(userId) === Number(recipe.userID) && (
+      {/* {Number(userId) === Number(recipe.userID) && (
         <Button
           variant="contained"
           color="secondary"
@@ -149,7 +149,7 @@ const RecipePage: React.FC = () => {
         >
           Delete Recipe
         </Button>
-      )}
+      )} */}
       <Typography variant="h5" gutterBottom>
         Reviews
       </Typography>
@@ -173,7 +173,7 @@ const RecipePage: React.FC = () => {
           </ListItem>
         ))}
       </List>
-      {userId !== recipe.userID && (
+      {Number(userId) !== Number(recipe.userID) && (
         <>
           <Button
             variant="contained"
@@ -233,6 +233,16 @@ const RecipePage: React.FC = () => {
             </Box>
           )}
         </>
+      )}
+      {Number(userId) === Number(recipe.userID) && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleDelete}
+          sx={{ mb: 4 }}
+        >
+          Delete Recipe
+        </Button>
       )}
     </Container>
   );

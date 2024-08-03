@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { Link } from "react-router-dom";
 import {
@@ -10,6 +10,8 @@ import {
   CardContent,
   CardActionArea,
   CircularProgress,
+  Button,
+  Box,
 } from "@mui/material";
 
 interface Recipe {
@@ -26,12 +28,16 @@ const SearchResultsPage: React.FC = () => {
   const query = useQuery().get("query") || "";
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const response = await api.get(`/recipes?query=${query}`);
-        setRecipes(response.data);
+        const filteredRecipes = response.data.filter((recipe: Recipe) =>
+          recipe.title.toLowerCase().includes(query.toLowerCase())
+        );
+        setRecipes(filteredRecipes);
       } catch (error) {
         console.error("Error fetching recipes:", error);
       } finally {
@@ -59,9 +65,19 @@ const SearchResultsPage: React.FC = () => {
 
   return (
     <Container sx={{ paddingTop: 8 }}>
-      <Typography variant="h4" gutterBottom>
-        Search Results for "{query}"
-      </Typography>
+      <Box display="flex" alignItems="center" marginBottom={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/recipes")}
+          sx={{ marginRight: 2 }}
+        >
+          Back
+        </Button>
+        <Typography variant="h4" gutterBottom>
+          Search Results for "{query}"
+        </Typography>
+      </Box>
       {recipes.length === 0 ? (
         <Typography variant="h6" color="textSecondary">
           No recipes found.

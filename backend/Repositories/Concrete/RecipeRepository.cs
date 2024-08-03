@@ -57,9 +57,9 @@ namespace backend.Repositories.Concrete
                 .Include(r => r.Reviews)
                 .Where(
                     r =>
-                        r.Title.Contains(query)
-                        || r.Description.Contains(query)
-                        || r.Ingredients.Contains(query)
+                        r.Title.ToLower().Contains(query.ToLower())
+                        || r.Description.ToLower().Contains(query.ToLower())
+                        || r.Ingredients.ToLower().Contains(query.ToLower())
                 )
                 .ToListAsync();
         }

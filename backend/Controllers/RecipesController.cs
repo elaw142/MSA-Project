@@ -45,16 +45,6 @@ namespace backend.Controllers
             return Ok(recipe);
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Recipe>>> SearchRecipes(string query)
-        {
-            var recipes = await _recipeRepository.GetAllRecipesAsync();
-            var filteredRecipes = recipes
-                .Where(r => r.Title.Contains(query) || r.Description.Contains(query))
-                .ToList();
-            return Ok(filteredRecipes);
-        }
-
         [HttpPost]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {

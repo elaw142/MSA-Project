@@ -13,7 +13,7 @@ import {
   Box,
 } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
-import { Egg, EggAlt, LunchDining } from "@mui/icons-material";
+import { BakeryDining, RiceBowl, LunchDining } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -35,6 +35,15 @@ const Navigation: React.FC<{
 
   const drawer = (
     <List>
+      <ListItem
+        button
+        component={Link}
+        to="/"
+        onClick={handleDrawerToggle}
+        selected={isActive(["/"])}
+      >
+        <ListItemText primary="Home" />
+      </ListItem>
       <ListItem
         button
         component={Link}
@@ -89,9 +98,13 @@ const Navigation: React.FC<{
         </>
       )}
       <ListItem button onClick={toggleTheme}>
-        <ListItemText primary={isDarkMode ? "Light Mode" : "Dark Mode"} />
+        <ListItemText primary={isDarkMode ? "Dark Mode" : "Light Mode"} />
         <IconButton color="inherit">
-          {isDarkMode ? <EggAlt /> : <Egg />}
+          {isDarkMode ? (
+            <BakeryDining sx={{ transform: "rotate(90deg)" }} />
+          ) : (
+            <RiceBowl />
+          )}
         </IconButton>
       </ListItem>
     </List>
@@ -182,7 +195,11 @@ const Navigation: React.FC<{
                 aria-label="mode toggle"
                 onClick={toggleTheme}
               >
-                {isDarkMode ? <EggAlt /> : <Egg />}
+                {isDarkMode ? (
+                  <BakeryDining sx={{ transform: "rotate(90deg)" }} />
+                ) : (
+                  <RiceBowl />
+                )}
               </IconButton>
             </Box>
           )}
