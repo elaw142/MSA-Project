@@ -49,10 +49,10 @@ builder.Services.AddCors(options =>
             policy
                 .WithOrigins(
                     // This for using Azure
-                    "https://msabackendwebapp-b7b6bqfda6fbhafk.australiasoutheast-01.azurewebsites.net/",
+                    "https://msafrontendwebapp-adckddeyeff6g7eh.australiasoutheast-01.azurewebsites.net"
 
                     // This for running locally with docker
-                    "http://localhost:3000"
+                    // "http://localhost:3000"
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
