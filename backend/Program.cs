@@ -42,15 +42,22 @@ builder.Services
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
-    {
-        policy
-            .WithOrigins(
-                "https://msabackendwebapp-b7b6bqfda6fbhafk.australiasoutheast-01.azurewebsites.net/"
-            )
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
+    options.AddPolicy(
+        "AllowAllOrigins",
+        policy =>
+        {
+            policy
+                .WithOrigins(
+                    // This for using Azure
+                    "https://msabackendwebapp-b7b6bqfda6fbhafk.australiasoutheast-01.azurewebsites.net/",
+
+                    // This for running locally with docker
+                    "http://localhost:3000"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+    );
 });
 
 var app = builder.Build();
@@ -64,10 +71,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAllOrigins");
+
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseCors();
 
 app.MapControllers();
 

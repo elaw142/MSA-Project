@@ -11,6 +11,7 @@ import {
   Link,
   InputAdornment,
   IconButton,
+  Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
@@ -19,19 +20,25 @@ const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { setToken, setUserId } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     try {
       const response = await api.post("/auth/register", { username, password });
       console.log("Register Response:", response.data); // Debugging line
       setToken(response.data.token);
       setUserId(response.data.userId); // Ensure userId is set
       navigate("/");
-    } catch (error) {
-      console.error("Error registering:", error);
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        setError("Username is already taken.");
+      } else {
+        setError("An error occurred while registering. Please try again.");
+      }
     }
   };
 
@@ -76,12 +83,17 @@ const RegisterPage: React.FC = () => {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={handleClickShowPassword} edge="end">
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
           <Button
             type="submit"
             variant="contained"

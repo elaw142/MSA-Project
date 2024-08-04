@@ -186,3 +186,8 @@ C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\
 C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\appsettings.json
 C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\backend.deps.json
 C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\backend.runtimeconfig.json
+C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\publish\web.config
+C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\publish\appsettings.Development.json
+C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\publish\appsettings.json
+C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\publish\backend.deps.json
+C:\Users\Audrey\Desktop\All\Coding\MSA Project\backend\bin\Debug\net8.0\publish\publish\publish\publish\publish\publish\backend.runtimeconfig.json
