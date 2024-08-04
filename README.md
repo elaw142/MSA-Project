@@ -3,7 +3,7 @@
 
 Welcome to **Nosh**, a recipe-sharing platform where users can discover, share, and review a variety of recipes from around the world. Whether you're a seasoned chef or a home cook, Nosh provides a community-driven space to find and share culinary inspiration.
 
-## One Thing I Am Proud Of
+### One Thing I Am Proud Of
 
 I am incredibly proud of getting **Docker and Azure working** for my project. Both Docker and Azure were new technologies for me, and it took a lot of effort and time to get everything working as intended. This accomplishment has taught me a lot about both technologies while also massively increasing the accessability of the project.
 
@@ -50,15 +50,19 @@ I am incredibly proud of getting **Docker and Azure working** for my project. Bo
 
 1.  **Clone the repository:**
 
-    `git clone https://github.com/elaw142/MSA-Project.git` 
+    `git clone https://github.com/elaw142/MSA-Project.git`
+
+2. **Change Variables:**
+
+   in api.ts switch the `API_BASE_URL` and in Program.cs change the domain in the CORS builder
     
-3.  **Run with Docker:**
+4.  **Run with Docker:**
     
     
     
     `docker-compose up --build` 
     
-4.  **Run locally:**
+5.  **Run locally:**
     
     -   Start the backend:
         
