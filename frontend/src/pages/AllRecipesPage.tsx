@@ -10,6 +10,8 @@ import {
   CardContent,
   CardMedia,
   CircularProgress,
+  TextField,
+  Box,
 } from "@mui/material";
 
 interface Recipe {
@@ -22,6 +24,7 @@ interface Recipe {
 const AllRecipesPage: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -37,6 +40,10 @@ const AllRecipesPage: React.FC = () => {
 
     fetchRecipes();
   }, []);
+
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) {
     return (
@@ -58,16 +65,35 @@ const AllRecipesPage: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         All Recipes
       </Typography>
-      {recipes.length === 0 ? (
+      <Box sx={{ marginBottom: 4 }}>
+        <TextField
+          label="Search Recipes"
+          variant="outlined"
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </Box>
+      {filteredRecipes.length === 0 ? (
         <Typography variant="h6" color="textSecondary">
           No recipes found.
         </Typography>
       ) : (
         <Grid container spacing={4}>
-          {[...recipes].reverse().map((recipe) => (
+          {filteredRecipes.reverse().map((recipe) => (
             <Grid item key={recipe.id} xs={12} sm={6} md={4}>
-              <Card>
-                <CardActionArea component={Link} to={`/recipes/${recipe.id}`}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <CardActionArea
+                  component={Link}
+                  to={`/recipes/${recipe.id}`}
+                  sx={{ flexGrow: 1 }}
+                >
                   {recipe.imageUrl && (
                     <CardMedia
                       component="img"
